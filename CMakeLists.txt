@@ -8,7 +8,11 @@ set(HYPODERMIC_VERSION
     "${HYPODERMIC_VERSION_MAJOR}.${HYPODERMIC_VERSION_MINOR}.${HYPODERMIC_VERSION_PATCH}"
 )
 
-enable_testing()
+option(HYPODERMIC_BUILD_TESTING, "build test", ON)
+
+if (HYPODERMIC_BUILD_TESTING)
+    enable_testing()
+endif()
 
 # enable gcc specific stuff
 if(CMAKE_COMPILER_IS_GNUCXX)
@@ -76,8 +80,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COMPILER_FLAGS} ${WARNING_FLAGS}")
 
 
 add_subdirectory(Hypodermic)
-add_subdirectory(Hypodermic.Tests)
-
+if (HYPODERMIC_BUILD_TESTING)
+    add_subdirectory(Hypodermic.Tests)
+endif()
 
 # uninstall target
 ##################
